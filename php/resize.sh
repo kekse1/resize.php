@@ -1,0 +1,1 @@
+../sh/resize.sh
