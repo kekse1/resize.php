@@ -114,7 +114,7 @@ function checkParameters()
 
 	if(is_int($param['size']))
 	{
-		if(!(KEKSE_CLI && KEKSE_RESIZE_ANY_CLI) && ($param['size'] < 1 || $param['size'] > 512)) return write('Size exceeds limit [1..512]!', 11);
+		if(!KEKSE_RESIZE_ANY && ($param['size'] < 1 || $param['size'] > 512)) return write('Size exceeds limit [1..512]!', 11);
 	}
 	else if(is_float($param['size']))
 	{
