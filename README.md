@@ -3,6 +3,14 @@
 # Overview
 Supports both BROWSER and CLI mode. Either via real size (1..512), or by a floating factor (>0.0 and <1.0).
 
+ONLY DOWNscaling allowed. Everything else makes no real sence (for security, but also because this script wasn't only
+intended for on-demand emoji scaling (because my original files are bigger than the requested target sizes..), but also
+for _automatic **thumbnail** creation_; .. and last but not least: UPscaling doesn't increase the image _quality_. ;)~
+
+## TODO
+Especially for thumbnails: a **cache** in the file system! So only one time necessary (for each requested size!!). ;)~
+But that's future, I'm not going to support this script as much as my other ones.. just got no more time.
+
 ## Example screenshot
 ![Example screenshot](docs/example.png)
 
