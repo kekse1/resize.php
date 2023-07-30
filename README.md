@@ -1,7 +1,7 @@
 <img src="https://kekse.biz/php/count.php?override=github:resize.php&text=`resize.php`" />
 
 # Overview
-Supports both BROWSER and CLI mode. Either via real size (1..512), or by a floating factor (>0.0 and <1.0).
+Supports both **BROWSER** and **CLI** mode. Either by real size (1..512), or by a floating factor (>0.0 and <1.0).
 
 ONLY DOWNscaling allowed. Everything else makes no real sence (for security, but also because this script wasn't only
 intended for on-demand emoji scaling (because my original files are bigger than the requested target sizes..), but also
