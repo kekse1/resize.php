@@ -24,7 +24,7 @@ Partially by the `count.php` exports (which are great! ;-) .. and by setting the
 ... will follow. Please **read the fucking source** until then.
 
 ## Download
-* [**`resize.php`** v**0.3.1**](php/resize.php)
+* [**`resize.php`** v**0.4.1**](php/resize.php)
 * [**`resize.sh`** wrapper](sh/resize.sh)
 
 ## Copyright and License
