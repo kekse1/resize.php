@@ -130,6 +130,12 @@ function checkParameters()
 	//
 	if(KEKSE_RESIZE_DIRECTORY)
 	{
+		if(!KEKSE_CLI)
+		{
+			if($param['input'][0] === '/') $param['input'] = substr($param['input'], 1);
+			if($param['input'][0] === '/') $param['input'] = substr($param['input'], 1);
+		}
+
 		if($param['input'] && $param['input'][0] !== '/') $param['input'] = KEKSE_RESIZE_DIRECTORY . '/' . $param['input'];
 		if($param['output'] && $param['output'][0] !== '/') $param['output'] = KEKSE_RESIZE_DIRECTORY . '/' . $param['output'];
 	}
