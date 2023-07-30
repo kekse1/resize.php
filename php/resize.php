@@ -24,15 +24,14 @@ require_once(__DIR__ . '/count.php');
 namespace kekse\resize;
 
 //
-define('KEKSE_RESIZE_VERSION', '0.3.0');
+define('KEKSE_RESIZE_VERSION', '0.4.0');
 define('KEKSE_RESIZE_WEBSITE', 'https://github.com/kekse1/resize.php/');
 define('KEKSE_RESIZE_DIRECTORY', '.');
-define('KEKSE_RESIZE_ANY', true);//will check if (IMG_WEBP | IMG_GIF) and if (size == 512)! otherwise all images are supported, including a resize FACTOR (float) instead of 0..512(int)!
+define('KEKSE_RESIZE_ANY_BROWSER', true);//will check if (IMG_WEBP | IMG_GIF) and if (size == 512)! otherwise all images are supported, including a resize FACTOR (float) instead of 0..512(int)!
 define('KEKSE_RESIZE_ANY_CLI', true);//in CLI mode not only emojies supported... :)~
 
-
 //
-define('KEKSE_RESIZE', (KEKSE_RESIZE_ANY || (KEKSE_CLI && KEKSE_RESIZE_ANY_CLI)));
+define('KEKSE_RESIZE_ANY', ((KEKSE_CLI && KEKSE_RESIZE_ANY_CLI) || (!KEKSE_CLI && KEKSE_RESIZE_ANY_BROWSER)));
 
 //
 function write($_message = '', $_exit = null, $_errStr = true)
@@ -72,7 +71,7 @@ if(!extension_loaded('gd'))
 }
 
 //
-$param = array('input' => null, 'output' => null, 'size' => null, 'quality' => null);
+$param = array('input' => null, 'output' => null, 'size' => null, 'scale' => null);
 
 //
 function checkParameters()
@@ -85,14 +84,21 @@ function checkParameters()
 	{
 		if($GLOBALS['KEKSE_ARGC'] < 4)
 		{
-			return write('Syntax: <input> <output> <integer/float> [ <quality (0..100)> ]', 1);
+			return write('Syntax: <input> <output> <integer/float[`!`]>', 1);
 		}
 		else
 		{
 			$param['input'] = $GLOBALS['KEKSE_ARGV'][1];
 			$param['output'] = $GLOBALS['KEKSE_ARGV'][2];
-			$param['size'] = (float)$GLOBALS['KEKSE_ARGV'][3];
-			if($GLOBALS['KEKSE_ARGC'] > 4) $param['quality'] = (int)$GLOBALS['KEKSE_ARGV'][4];
+			$param['size'] = $GLOBALS['KEKSE_ARGV'][3];
+			
+			if($param['size'][strlen($param['size']) - 1] === '!')
+			{
+				$param['size'] = substr($param['size'], 0, -1);
+				$param['scale'] = true;
+			}
+
+			$param['size'] = (float)$param['size'];
 		}
 	}
 	else
@@ -100,34 +106,19 @@ function checkParameters()
 		$param['input'] = \kekse\getParam('input');
 		$param['output'] = null;
 		$param['size'] = \kekse\getParam('size', true, true, true);
-		$param['quality'] = \kekse\getParam('quality', true, false, true);
+		$param['scale'] = isset($_GET['scale']);
 	}
 
 	if(is_float($param['size']) && fmod($param['size'], 1) == 0) $param['size'] = (int)$param['size'];
-
-	if(is_int($param['quality']))
-	{
-		if($param['quality'] <= 0)
-		{
-			$param['quality'] = 0;
-		}
-		else if($param['quality'] >= 100)
-		{
-			$param['quality'] = 100;
-		}
-	}
-	else
-	{
-		$param['quality'] = null;
-	}
+	if(is_float($param['size'])) $param['scale'] = null;
 
 	if(is_int($param['size']))
 	{
-		if($param['size'] < 1 || $param['size'] > 512) return write('Size exceeds limit [1..512]!', 11);
+		if(!(KEKSE_CLI && KEKSE_RESIZE_ANY_CLI) && ($param['size'] < 1 || $param['size'] > 512)) return write('Size exceeds limit [1..512]!', 11);
 	}
 	else if(is_float($param['size']))
 	{
-		if(!KEKSE_RESIZE) return write('You may not scale by float factor in emoji mode!', 13);
+		if(!KEKSE_RESIZE_ANY) return write('You may not scale by float factor in emoji mode!', 13);
 		else if($param['size'] <= 0.0) return write('Size scale factor is too low', 14);
 		else if($param['size'] >= 1.0) return write('Size scale factor is too high', 15);
 	}
@@ -179,7 +170,7 @@ if(KEKSE_CLI)
 	write(KEKSE_RESIZE_WEBSITE);
 	write('v' . KEKSE_RESIZE_VERSION);
 	write();
-	if(!KEKSE_RESIZE) write('You are only allowed to resize emojis..!' . PHP_EOL);
+	if(!KEKSE_RESIZE_ANY) write('You are only allowed to resize emojis, btw...' . PHP_EOL);
 }
 
 //
@@ -195,11 +186,11 @@ function resize(&$_param)
 	$mime = $inputMeasure['mime'];
 
 	//
-	if(!KEKSE_RESIZE && ($width != 512 || $height != 512))
+	if(!KEKSE_RESIZE_ANY && ($width != 512 || $height != 512))
 	{
 		return write('Seems not to be a valid emoji (=> size)..', 8);
 	}
-	else if(!KEKSE_RESIZE && !($mime === 'image/webp' || $mime === 'image/gif'))
+	else if(!KEKSE_RESIZE_ANY && !($mime === 'image/webp' || $mime === 'image/gif'))
 	{
 		return write('Seems not to be a valid emoji (=> type)..', 9);
 	}
@@ -228,7 +219,7 @@ function resize(&$_param)
 		default:
 			return write('Invalid MIME type', 10);
 	}
-	
+
 	if(! ($func['create'] && $func['output'])) return write('Couldn\'t find matching create and/or output image functions.', 11);
 
 	//
@@ -245,12 +236,28 @@ function resize(&$_param)
 	$targetWidth = null;
 	$targetHeight = null;
 
-	if(is_int($_param['size'])) $targetWidth = $targetHeight = $_param['size'];
+	if(is_int($_param['size']))
+	{
+		if($_param['scale'] && !($width === $height))
+		{
+			$max = max($width, $height);
+			$scale = ((float)$_param['size'] / (float)$max);
+			$targetWidth = ((float)$width * $scale);
+			$targetHeight = ((float)$height * $scale);
+		}
+		else
+		{
+			$targetWidth = $targetHeight = $_param['size'];
+		}
+	}
 	else
 	{
-		$targetWidth = (int)round(((float)$width * $_param['size']));
-		$targetHeight = (int)round(((float)$height * $_param['size']));
+		$targetWidth = ((float)$width * $_param['size']);
+		$targetHeight = ((float)$height * $_param['size']);
 	}
+
+	$targetWidth = (int)round($targetWidth);
+	$targetHeight = (int)round($targetHeight);
 
 	//
 	$input = null;
@@ -270,8 +277,7 @@ function resize(&$_param)
 
 	//
 	if(!$_param['output']) header('Content-Type: ' . $mime);
-	if($_param['quality'] === null) $func['output']($output, $_param['output']);
-	else $func['output']($output, $_param['output'], $_param['quality']);
+	$func['output']($output, $_param['output']);
 	
 	if(KEKSE_CLI)
 	{
