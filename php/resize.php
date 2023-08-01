@@ -4,8 +4,7 @@
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://github.com/kekse1/
  *
- * v0.3.1 (.. erste test-version);
- * ... read the fucking source, pls.
+ * v0.5.0
  *
  * //comments/
  * php v8.2.7: animierte bilder ohne animation resized, und .webp gehen erstmal garnicht.
@@ -24,7 +23,7 @@ require_once(__DIR__ . '/count.php');
 namespace kekse\resize;
 
 //
-define('KEKSE_RESIZE_VERSION', '0.4.1');
+define('KEKSE_RESIZE_VERSION', '0.5.0');
 define('KEKSE_RESIZE_WEBSITE', 'https://github.com/kekse1/resize.php/');
 define('KEKSE_RESIZE_DIRECTORY', getcwd());
 define('KEKSE_RESIZE_ANY_BROWSER', true);//will check if (IMG_WEBP | IMG_GIF) and if (size == 512)! otherwise all images are supported, including a resize FACTOR (float) instead of 0..512(int)!
@@ -51,8 +50,8 @@ function write($_message = '', $_exit = null, $_errStr = true)
 			if($_exit === null || $_exit === 0) printf($_message);
 			else fprintf(\STDERR, $_message);
 		}
-		else if($_exit === 0 || $_exit === null) printf(($_message === '' ? '' : ' >> ') . $_message . PHP_EOL);
-		else fprintf(\STDERR, ' >> ' . ($_errStr ? '[ERROR] ' : '') . $_message . PHP_EOL);
+		else if($_exit === 0 || $_exit === null) \kekse\info($_message);
+		else \kekse\error($_message);
 	}
 	else
 	{
@@ -71,7 +70,7 @@ if(!extension_loaded('gd'))
 }
 
 //
-$param = array('input' => null, 'output' => null, 'size' => null, 'scale' => null);
+$param = array('input' => null, 'output' => null, 'size' => null, 'quad' => null);
 
 //
 function checkParameters()
@@ -95,7 +94,11 @@ function checkParameters()
 			if($param['size'][strlen($param['size']) - 1] === '!')
 			{
 				$param['size'] = substr($param['size'], 0, -1);
-				$param['scale'] = true;
+				$param['quad'] = true;
+			}
+			else
+			{
+				$param['quad'] = false;
 			}
 
 			$param['size'] = (float)$param['size'];
@@ -106,15 +109,16 @@ function checkParameters()
 		$param['input'] = \kekse\getParam('input');
 		$param['output'] = null;
 		$param['size'] = \kekse\getParam('size', true, true, true);
-		$param['scale'] = isset($_GET['scale']);
+		$param['quad'] = isset($_GET['quad']);
 	}
 
 	if(is_float($param['size']) && fmod($param['size'], 1) == 0) $param['size'] = (int)$param['size'];
-	if(is_float($param['size'])) $param['scale'] = null;
+	if(is_float($param['size'])) $param['quad'] = null;
 
 	if(is_int($param['size']))
 	{
-		if(!KEKSE_RESIZE_ANY && ($param['size'] < 1 || $param['size'] > 512)) return write('Size exceeds limit [1..512]!', 11);
+		if($param['size'] <= 0) return write('Size needs to be positive', 11);
+		if(!KEKSE_RESIZE_ANY && ($param['size'] < 1 || $param['size'] > 512)) return write('Size exceeds limit [1..512]!', 12);
 	}
 	else if(is_float($param['size']))
 	{
@@ -244,7 +248,7 @@ function resize(&$_param)
 
 	if(is_int($_param['size']))
 	{
-		if($_param['scale'] && !($width === $height))
+		if(!$_param['quad'] && !($width === $height))
 		{
 			$max = max($width, $height);
 			$scale = ((float)$_param['size'] / (float)$max);
@@ -265,19 +269,21 @@ function resize(&$_param)
 	$targetWidth = (int)round($targetWidth);
 	$targetHeight = (int)round($targetHeight);
 
+	if($targetWidth > $width || $targetHeight > $height) return write('UPscaling is not allowed, sizes needs to be lower!', 12);
+
 	//
 	$input = null;
 	$output = null;
 
 	//
-	if(($input = $func['create']($_param['input'])) === false) return write('Couldn\'t load input image!', 12);
+	if(($input = $func['create']($_param['input'])) === false) return write('Couldn\'t load input image!', 13);
 	$setDetails($input);
-	if(($output = imagecreatetruecolor($targetWidth, $targetHeight)) === false) return write('Couldn\'t initialize output image!', 12);
+	if(($output = imagecreatetruecolor($targetWidth, $targetHeight)) === false) return write('Couldn\'t initialize output image!', 14);
 	$setDetails($output);
 	$transparent = imagecolorallocatealpha($output, 255, 255, 255, 127);
 	imagefill($output, 0, 0, $transparent);
 	if($func['resize']($output, $input, 0, 0, 0, 0, $targetWidth, $targetHeight, imagesx($input), imagesy($input)) === false)
-	return write('Unable to resize the image!', 13);
+	return write('Unable to resize the image!', 15);
 	imagedestroy($input);
 	if(!$mime) $mime = image_type_to_mime_type(image_type($output));
 
