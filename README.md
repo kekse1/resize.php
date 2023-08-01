@@ -1,15 +1,8 @@
 <img src="https://kekse.biz/php/count.php?override=github:resize.php&text=`resize.php`" />
 
 # Overview
-Supports both **BROWSER** and **CLI** mode. Either by real size (1..512), or by a floating factor (>0.0 and <1.0).
-
-ONLY DOWNscaling allowed. Everything else makes no real sence (for security, but also because this script wasn't only
-intended for on-demand emoji scaling (because my original files are bigger than the requested target sizes..), but also
-for _automatic **thumbnail** creation_; .. and last but not least: UPscaling doesn't increase the image _quality_. ;)~
-
-
-## Example screenshot
-![Example screenshot](docs/example.png)
+Just a image resizer; but it supports both **BROWSER** and **CLI** mode.
+Either by real size (1..512), or by a floating factor (>0.0 and <1.0).
 
 ## Usage
 In the **browser** you can call this script via `...?input=file&size=(int|float)[&quad]`. In the **command line** you'll see the
@@ -48,6 +41,9 @@ It also got nice console features (with ANSI colors, styles, etc.); and especial
 `KEKSE_RAW` feature, to use everything in other scripts, without the real `counter()` function to be called automatically.
 
 The `count.php` needs to be located in the same directory where this script is put into. A symbolic link is also valid! ;)~
+
+## Example screenshot
+![Example screenshot](docs/example.png)
 
 ## Bugs and TODO
 _Problem_ is (**here**!): I also wanted to resize animated emojis, but animation seems not to be supported.. at least in my
