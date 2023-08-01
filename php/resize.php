@@ -23,11 +23,13 @@ require_once(__DIR__ . '/count.php');
 namespace kekse\resize;
 
 //
-define('KEKSE_RESIZE_VERSION', '0.5.0');
-define('KEKSE_RESIZE_WEBSITE', 'https://github.com/kekse1/resize.php/');
 define('KEKSE_RESIZE_DIRECTORY', getcwd());
 define('KEKSE_RESIZE_ANY_BROWSER', true);//will check if (IMG_WEBP | IMG_GIF) and if (size == 512)! otherwise all images are supported, including a resize FACTOR (float) instead of 0..512(int)!
 define('KEKSE_RESIZE_ANY_CLI', true);//in CLI mode not only emojies supported... :)~
+
+//
+define('KEKSE_RESIZE_VERSION', '0.5.0');
+define('KEKSE_RESIZE_WEBSITE', 'https://github.com/kekse1/resize.php/');
 
 //
 define('KEKSE_RESIZE_ANY', ((KEKSE_CLI && KEKSE_RESIZE_ANY_CLI) || (!KEKSE_CLI && KEKSE_RESIZE_ANY_BROWSER)));
