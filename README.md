@@ -1,5 +1,16 @@
 <img src="https://kekse.biz/php/count.php?override=github:resize.php&text=`resize.php`" />
 
+# Index
+1. [Overview](#overview)
+2. [Usage](#usage)
+3. [Configuration](#configuration)
+4. [Download](#download)
+5. [Dependencies](#dependencies)
+6. [Formats](#formats)
+7. [Screenshot](#screenshot)
+8. [Bugs and TODO](#bugs-and-todo)
+9. [Copyright and License](#copyright-and-license)
+
 # Overview
 Just a image resizer; but it supports both **BROWSER** and **CLI** mode!
 Either by real target pixel size, or by a floating point factor.
@@ -49,7 +60,9 @@ It also got nice console features (with ANSI colors, styles, etc.); and especial
 
 The `count.php` needs to be located in the same directory where this script is put into. A symbolic link is also valid! ;)~
 
-## Supported formats
+## Formats
+Supported image formats are:
+
 * JPEG
 * PNG
 * WebP
@@ -58,7 +71,10 @@ The `count.php` needs to be located in the same directory where this script is p
 Due to my sanity the output image will also be the same format as the input image (that's what I decided due to image
 quality concerns.. or do you really want to convert images to other formats? => feel free to ask me..).
 
-## Example screenshot
+> **Warning**
+> If the `any` configuration is not enabled, we're limited to emoji input images, so then only `WebP` and `GIF` are usable.
+
+## Screenshot
 ![Example screenshot](docs/cli-example.png)
 
 ## Bugs and TODO
