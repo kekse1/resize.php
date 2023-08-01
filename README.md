@@ -1,11 +1,11 @@
 <img src="https://kekse.biz/php/count.php?override=github:resize.php&text=`resize.php`" />
 
 # Overview
-Just a image resizer; but it supports both **BROWSER** and **CLI** mode! Either by real pixel size,
-or by a floating point factor (>0.0 and <1.0).
+Just a image resizer; but it supports both **BROWSER** and **CLI** mode!
+Either by real target pixel size, or by a floating point factor.
 
-The output image will keep proportions, unless you define the **quad mode** (via **`?quad`**
-GET param in the browser, or with a **`!`** size suffix in the console).
+The output image will keep proportions, unless you define the **quad mode** (via
+**`?quad`** GET param in the browser, or with a **`!`** size suffix in the console).
 
 ## Usage
 In the **browser** you can call this script via `...?input=file&size=(int|float)[&quad]`. In the **command line** you'll see the
