@@ -1,8 +1,8 @@
 <img src="https://kekse.biz/php/count.php?override=github:resize.php&text=`resize.php`" />
 
 # Overview
-Just a image resizer; but it supports both **BROWSER** and **CLI** mode.
-Either by real size (1..512), or by a floating factor (>0.0 and <1.0).
+Just a image resizer; but it supports both **BROWSER** and **CLI** mode!
+.. either by real pixel size, or by a floating point factor (>0.0 and <1.0).
 
 ## Usage
 In the **browser** you can call this script via `...?input=file&size=(int|float)[&quad]`. In the **command line** you'll see the
@@ -23,7 +23,7 @@ neither the disk drive nor the bandwidth/traffic is affected that much! **;)~**
 | define()'d **KEY**             | Default **VALUE** | Meaning                                                                   |
 | -----------------------------: | :---------------- | :------------------------------------------------------------------------ |
 | **`KEKSE_RESIZE_DIRECTORY`**   | `getcwd()`        | For relative paths this will be inserted at their beginnings.             |
-| **`KEKSE_RESIZE_ANY_BROWSER`** | `true`            | `any` means any input image ...                                           |
+| **`KEKSE_RESIZE_ANY_BROWSER`** | `true`            | `any` means any input image ... and no output pixel limit of 512 ..       |
 | **`KEKSE_RESIZE_ANY_CLI`**     | `true`            | .. otherwise only emojis are supported (file type and file size limits).. |
 
 ## Download
