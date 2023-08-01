@@ -12,6 +12,10 @@ or a target pixel size with `!` suffix in the console.
 In the **browser** you can call this script via `...?input=file&size=(int|float)[&quad]`. In the **command line** you'll see the
 syntax by just calling this script w/o (or with less than 3) parameters. The regular syntax is: `$0 <input file> <output file> <(int|float)[!]>`.
 
+> **Note**
+> In the BROWSER, the output image will directly be written (with appropriate `Content-Type` header), whereas in the
+> command line you've to specify an output file (path)!
+
 Here the **`!`** sign after an (integer!) size is the replacement for the browser's `?quad`, so the resulting image won't be
 scaled in it's proportions, but result in a quadratic image. A **float** size (needs to be greater than 0.0 and lower than 1.0)
 will scale the image by this ratio, an **integer** will result in this real pixel size.
@@ -31,7 +35,7 @@ neither the disk drive nor the bandwidth/traffic is affected that much! **;)~**
 | **`KEKSE_RESIZE_ANY_CLI`**     | `true`            | .. otherwise only emojis are supported (file type and file size limits).. |
 
 ## Download
-* [**`resize.php`** v**0.5.0**](php/resize.php)
+* [**`resize.php`** v**0.5.1**](php/resize.php)
 * [**`resize.sh`** wrapper](sh/resize.sh)
 
 ## Dependencies
@@ -56,7 +60,7 @@ Due to my sanity the output image will also be the same format as the input imag
 quality concerns.. or do you really want to convert images to other formats? => feel free to ask me..).
 
 ## Example screenshot
-![Example screenshot](docs/cli.png)
+![Example screenshot](docs/cli-example.png)
 
 ## Bugs and TODO
 _Problem_ is (**here**!): I also wanted to resize animated emojis, but animation seems not to be supported.. at least in my

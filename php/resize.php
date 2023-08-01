@@ -28,7 +28,7 @@ define('KEKSE_RESIZE_ANY_BROWSER', true);//will check if (IMG_WEBP | IMG_GIF) an
 define('KEKSE_RESIZE_ANY_CLI', true);//in CLI mode not only emojies supported... :)~
 
 //
-define('KEKSE_RESIZE_VERSION', '0.5.0');
+define('KEKSE_RESIZE_VERSION', '0.5.1');
 define('KEKSE_RESIZE_WEBSITE', 'https://github.com/kekse1/resize.php/');
 
 //
@@ -295,10 +295,26 @@ function resize(&$_param)
 	
 	if(KEKSE_CLI)
 	{
-		write('         `' . basename($_param['input']) . '` => `' . basename($_param['output']) . '`');
-		write(' [width] ' . $width . ' => ' . $targetWidth);
-		write('[height] ' . $height . ' => ' . $targetHeight);
-		write('  [size] ' . filesize($_param['input']) . ' => ' . filesize($_param['output']));
+		$inputSize = filesize($_param['input']);
+		$outputSize = filesize($_param['output']);
+		
+		$strings = array(
+			'width' => (string)$width,
+			'height' => (string)$height,
+			'targetWidth' => (string)$targetWidth,
+			'targetHeight' => (string)$targetHeight,
+			'inputBytes' => (string)$inputSize,
+			'outputBytes' => (string)$outputSize,
+			'inputSize' => \kekse\renderSize($inputSize, 2),
+			'outputSize' => \kekse\renderSize($outputSize, 2));
+		$pad = max(strlen($strings['width']), strlen($strings['height']), strlen($strings['inputBytes']), strlen($strings['inputSize']));
+		
+		write('   [input] `' . basename($_param['input']) . '`');
+		write('  [output] `' . basename($_param['output']) . '`');
+		write('   [width] ' . str_pad((string)$width, $pad, ' ', STR_PAD_LEFT) . ' => ' . $targetWidth . ' (px)');
+		write('  [height] ' . str_pad((string)$height, $pad, ' ', STR_PAD_LEFT) . ' => ' . $targetHeight . ' (px)');
+		write('   [bytes] ' . str_pad((string)$inputSize, $pad, ' ', STR_PAD_LEFT) . ' => ' . $outputSize);
+		write('    [size] ' . str_pad(\kekse\renderSize($inputSize), $pad, ' ', STR_PAD_LEFT) . ' => ' . \kekse\renderSize($outputSize));
 	}
 	
 	//
