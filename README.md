@@ -46,8 +46,17 @@ It also got nice console features (with ANSI colors, styles, etc.); and especial
 
 The `count.php` needs to be located in the same directory where this script is put into. A symbolic link is also valid! ;)~
 
+## Supported formats
+* JPEG
+* PNG
+* WebP
+* GIF
+
+Due to my sanity the output image will also be the same format as the input image (that's what I decided due to image
+quality concerns.. or do you really want to convert images to other formats? => feel free to ask me..).
+
 ## Example screenshot
-![Example screenshot](docs/example.png)
+![Example screenshot](docs/cli.png)
 
 ## Bugs and TODO
 _Problem_ is (**here**!): I also wanted to resize animated emojis, but animation seems not to be supported.. at least in my
