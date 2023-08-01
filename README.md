@@ -11,11 +11,7 @@ The output image will keep proportions, unless you define the **quad mode** (via
 In the **browser** you can call this script via `...?input=file&size=(int|float)[&quad]`. In the **command line** you'll see the
 syntax by just calling this script w/o (or with less than 3) parameters. The regular syntax is: `$0 <input file> <output file> <(int|float)[!]>`.
 
-> **Note**
-> In the BROWSER, the output image will directly be written (with appropriate `Content-Type` header), whereas in the
-> command line you've to specify an output file (path)!
-
-Here the **`!`** sign after an (integer!) size is the replacement for the browser's `?quad`, so the resulting image won't be
+The **`!`** sign after an (integer!) size is the replacement for the browser's `?quad`, so the resulting image won't be
 scaled in it's proportions, but result in a quadratic image. A **float** size (needs to be greater than 0.0 and lower than 1.0)
 will scale the image by this ratio, an **integer** will result in this real pixel size.
 
@@ -23,6 +19,10 @@ will scale the image by this ratio, an **integer** will result in this real pixe
 > **UP**-scaling is _never ever_ allowed, only **DOWN**-scaling.. so the output image always needs to be smaller than the input image;
 > which is one the one hand because larger outputs never got the same quality, and, on the other hand (which weights even more!) so
 neither the disk drive nor the bandwidth/traffic is affected that much! **;)~**
+
+> **Note**
+> In the BROWSER, the output image will directly be written (with appropriate `Content-Type` header), whereas in the
+> command line you've to specify an output file (path)!
 
 ## Configuration
 .. is simply put on top of the script:
