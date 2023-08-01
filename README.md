@@ -2,7 +2,11 @@
 
 # Overview
 Just a image resizer; but it supports both **BROWSER** and **CLI** mode!
-.. either by real pixel size, or by a floating point factor (>0.0 and <1.0).
+
+Either by real pixel size, or by a floating point factor (>0.0 and <1.0).
+
+The output image will also keep it's proportions, unless you define the `?quad` mode (or specify a
+target pixel size with `!` suffix).
 
 ## Usage
 In the **browser** you can call this script via `...?input=file&size=(int|float)[&quad]`. In the **command line** you'll see the
