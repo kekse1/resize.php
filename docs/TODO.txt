@@ -1,0 +1,7 @@
+
+	# more formats (all supported by GD lib in PHP)
+
+	# maybe also format conversion!??
+
+	# <https://github.com/kekse1/getopt.js/>???
+
