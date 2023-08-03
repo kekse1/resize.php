@@ -21,7 +21,7 @@ define('KEKSE_RESIZE_ANY_BROWSER', true);//will check if (IMG_WEBP | IMG_GIF) an
 define('KEKSE_RESIZE_ANY_CLI', true);//in CLI mode not only emojies supported... :)~
 
 //
-define('KEKSE_RESIZE_VERSION', '0.5.2');
+define('KEKSE_RESIZE_VERSION', '0.5.3');
 define('KEKSE_RESIZE_WEBSITE', 'https://github.com/kekse1/resize.php/');
 
 //
@@ -265,20 +265,21 @@ function resize(&$_param)
 	$targetHeight = (int)round($targetHeight);
 
 	if($targetWidth > $width || $targetHeight > $height) return write('UPscaling is not allowed, sizes needs to be lower!', 12);
+	else if($targetWidth < 1 || $targetHeight < 1) return write('Target size may not be below 1px.', 13);
 
 	//
 	$input = null;
 	$output = null;
 
 	//
-	if(($input = $func['create']($_param['input'])) === false) return write('Couldn\'t load input image!', 13);
+	if(($input = $func['create']($_param['input'])) === false) return write('Couldn\'t load input image!', 14);
 	$setDetails($input);
-	if(($output = imagecreatetruecolor($targetWidth, $targetHeight)) === false) return write('Couldn\'t initialize output image!', 14);
+	if(($output = imagecreatetruecolor($targetWidth, $targetHeight)) === false) return write('Couldn\'t initialize output image!', 15);
 	$setDetails($output);
 	$transparent = imagecolorallocatealpha($output, 255, 255, 255, 127);
 	imagefill($output, 0, 0, $transparent);
 	if($func['resize']($output, $input, 0, 0, 0, 0, $targetWidth, $targetHeight, imagesx($input), imagesy($input)) === false)
-	return write('Unable to resize the image!', 15);
+	return write('Unable to resize the image!', 16);
 	imagedestroy($input);
 	if(!$mime) $mime = image_type_to_mime_type(image_type($output));
 
