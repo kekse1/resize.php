@@ -45,7 +45,7 @@ neither the disk drive nor the bandwidth/traffic is affected that much! **;)~**
 | **`KEKSE_RESIZE_ANY_CLI`**     | `true`            | .. otherwise only emojis are supported (file type and file size limits).. |
 
 ## Download
-* [**`resize.php`** v**0.5.3**](php/resize.php)
+* [**`resize.php`** v**0.5.4**](php/resize.php)
 * [**`resize.sh`** wrapper](sh/resize.sh)
 
 ## Dependencies

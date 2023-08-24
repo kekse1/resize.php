@@ -21,7 +21,7 @@ define('KEKSE_RESIZE_ANY_BROWSER', true);//will check if (IMG_WEBP | IMG_GIF) an
 define('KEKSE_RESIZE_ANY_CLI', true);//in CLI mode not only emojies supported... :)~
 
 //
-define('KEKSE_RESIZE_VERSION', '0.5.3');
+define('KEKSE_RESIZE_VERSION', '0.5.4');
 define('KEKSE_RESIZE_WEBSITE', 'https://github.com/kekse1/resize.php/');
 
 //
@@ -233,7 +233,6 @@ function resize(&$_param)
 		if(!$_image) return $_image = false;
 		imagesavealpha($_image, true);
 		imagealphablending($_image, true);
-		imageinterlace($_image, true);
 		return $_image;
 	};
 	
