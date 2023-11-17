@@ -84,7 +84,7 @@ PHP version with it's own GD library.. additionally I've got problems with `WebP
 And the TODO, especially for _thumbnails_, is: a **cache** in the file system! So only one time necessary (for each requested size!!).
 But that's somewhere in the future, I'm not going to support this script as much as my other ones.. just got no more time.
 
-## Copyright and License
+# Copyright and License
 The Copyright is [(c) Sebastian Kucharczyk](COPYRIGHT.txt),
 and it's licensed under the [MIT](LICENSE.txt) (also known as 'X' or 'X11' license).
 
