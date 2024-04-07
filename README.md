@@ -1,4 +1,4 @@
-<img src="https://kekse.biz/github.php?draw&override=github:resize.php">
+<img src="https://kekse.biz/github.php?draw&override=github:resize.php" />
 
 # Index
 1. [Overview](#overview)
