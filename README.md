@@ -76,7 +76,7 @@ quality concerns.. or do you really want to convert images to other formats? => 
 > If the `any` configuration is not enabled, we're limited to emoji input images, so then only `WebP` and `GIF` are usable.
 
 ## Screenshot
-![Example screenshot](docs/cli-example.png)
+![Example screenshot](img/cli-example.png)
 
 ## Bugs and TODO
 _Problem_ is (**here**!): I also wanted to resize animated emojis, but animation seems not to be supported.. at least in my
