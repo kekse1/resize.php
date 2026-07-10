@@ -1,5 +1,9 @@
 <img src="https://kekse.biz/github.php?draw&override=github:resize.php" />
 
+# `resize.php`
+
+<br>
+
 # Index
 1. [Overview](#overview)
 2. [Usage](#usage)
@@ -11,6 +15,8 @@
 8. [Bugs and TODO](#bugs-and-todo)
 9. [Contact](#contact)
 10. [Copyright and License](#copyright-and-license)
+
+<br><br>
 
 # Overview
 Just a image resizer; but it supports both **BROWSER** and **CLI** mode!
@@ -85,8 +91,12 @@ PHP version with it's own GD library.. additionally I've got problems with `WebP
 And the TODO, especially for _thumbnails_, is: a **cache** in the file system! So only one time necessary (for each requested size!!).
 But that's somewhere in the future, I'm not going to support this script as much as my other ones.. just got no more time.
 
+<br><br><br>
+
 # Contact
 <img src="https://kekse.biz/github.php?override=github:resize.php&draw&text=resize.php@kekse.biz&angle=6&size=38pt&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
+
+<br>
 
 # Copyright and License
 The Copyright is [(c) Sebastian Kucharczyk](COPYRIGHT.txt),
